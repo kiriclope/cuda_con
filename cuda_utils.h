@@ -114,21 +114,21 @@ __global__ void kernel_gen_con_prob() {
       dev_con_prob_chunck[i + id * N_NEURONS] = dev_K_over_Na[dev_pre_pop] ; 
       
       if(IF_RING || IF_SPEC) 
-	if(DEV_IS_STRUCT_SYN[dev_pre_pop + dev_post_pop * n_pop]!=0) 
-	  dev_con_prob_chunck[i + id * N_NEURONS] *= ( 1.0 + kappa
-						       * DEV_IS_STRUCT_SYN[dev_pre_pop + dev_post_pop * n_pop]
-						       * cos( dev_theta[i_neuron] - dev_theta[i] )
-						       ) ; 
+		if(DEV_IS_STRUCT_SYN[dev_pre_pop + dev_post_pop * n_pop]!=0)
+		  dev_con_prob_chunck[i + id * N_NEURONS] *= ( 1.0 + kappa
+													   * DEV_IS_STRUCT_SYN[dev_pre_pop + dev_post_pop * n_pop]
+													   * cos( dev_theta[i_neuron] - dev_theta[i] )
+													   ) ;
       
       if(IF_LOW_RANK)
-	if(dev_pre_pop==0 && dev_post_pop==0) {
+		if(dev_pre_pop==0 && dev_post_pop==0) {
 	  
-	  dev_con_prob_chunck[i + id * N_NEURONS] += kappa_K_N * dev_ksi[i] * dev_ksi[i_neuron] ; 
-	  if(RANK==2) 
-	    dev_con_prob_chunck[i + id * N_NEURONS] += kappa_K_N * KAPPA_FRAC * dev_ksi_1[i] * dev_ksi_1[i_neuron] ; 
-	  // KAPPA_1 is KAPPA_FRAC * KAPPA 
-	  dev_con_prob_chunck[i + id * N_NEURONS] = cut_LR(dev_con_prob_chunck[i + id * N_NEURONS]) ; 
-	}
+		  dev_con_prob_chunck[i + id * N_NEURONS] += kappa_K_N * dev_ksi[i] * dev_ksi[i_neuron] ;
+		  if(RANK==2)
+			dev_con_prob_chunck[i + id * N_NEURONS] += kappa_K_N * KAPPA_FRAC * dev_ksi_1[i] * dev_ksi_1[i_neuron] ;
+		  // KAPPA_1 is KAPPA_FRAC * KAPPA
+		  dev_con_prob_chunck[i + id * N_NEURONS] = cut_LR(dev_con_prob_chunck[i + id * N_NEURONS]) ;
+		}
       
     } 
   } 
@@ -169,9 +169,9 @@ __global__ void kernel_gen_con_vec() {
       /* } */
 
       if( dev_con_prob_chunck[i + id * N_NEURONS] >= unif_dist(id) ) { 
-	dev_con_vec_chunck[i + id * N_NEURONS] = 1 ; 
-	dev_total_n_post++ ; 
-	dev_n_post[i_neuron]++ ; 
+		dev_con_vec_chunck[i + id * N_NEURONS] = 1 ;
+		dev_total_n_post++ ;
+		dev_n_post[i_neuron]++ ;
       }             
       /* else  */ 
       /* 	dev_con_vec_chunck[id + i * N_NEURONS_PER_CHUNCK] = 0 ;  */

@@ -42,6 +42,8 @@ const float IS_STRUCT_SYN[4] = {1.0, 1.0, 1.0, 1.0} ; // WARNING check that it i
 __device__ const float DEV_IS_STRUCT_SYN[4] = {1.0, 1.0, 0.85, 1.0} ;
 /* __device__ const float DEV_IS_STRUCT_SYN[4] = {1.0, 1.0, 0.65, 1.0} ;  */
 
+#define IF_NO_QUENCH 0
+
 #define IF_RING 0 
 #define IF_SPEC 0 
 #define IF_GAUSS 0 
